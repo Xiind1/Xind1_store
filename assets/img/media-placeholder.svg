@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t">
+  <title id="t">Изображение недоступно / Image unavailable</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#121a21"/>
+      <stop offset="1" stop-color="#0c0f12"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#83d6ff" stroke-opacity=".05" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <rect x="64" y="64" width="1072" height="547" rx="28" fill="none" stroke="#5e8292" stroke-width="3" stroke-dasharray="14 12" opacity=".5"/>
+  <g fill="none" stroke="#83d6ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity=".85">
+    <rect x="510" y="200" width="180" height="140" rx="18"/>
+    <path d="m530 316 46-48 38 36 28-26 40 38"/>
+    <circle cx="646" cy="240" r="14"/>
+  </g>
+  <text x="600" y="425" fill="#edf7fb" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" text-anchor="middle">Изображение недоступно</text>
+  <text x="600" y="472" fill="#a9c0ca" font-family="Arial, Helvetica, sans-serif" font-size="24" text-anchor="middle">Image unavailable</text>
+</svg>

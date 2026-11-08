@@ -1,0 +1,6 @@
+# Служебные файлы ОС не публикуются (создано панелью управления)
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+*.tmp

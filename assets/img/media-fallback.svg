@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t">
+  <title id="t">Медиа временно недоступно / Media temporarily unavailable</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#12161a"/>
+      <stop offset="1" stop-color="#0c0d0f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="22%" cy="16%" r="80%">
+      <stop offset="0" stop-color="#14384b" stop-opacity=".65"/>
+      <stop offset="1" stop-color="#0c0d0f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <g fill="none" stroke="#83d6ff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".9">
+    <rect x="500" y="205" width="200" height="150" rx="20"/>
+    <path d="m525 325 55-58 44 43 34-32 42 47"/>
+    <circle cx="650" cy="250" r="17"/>
+    <path d="M492 197 708 363" stroke="#f3f3f1" stroke-opacity=".55"/>
+  </g>
+  <text x="600" y="430" fill="#f3f3f1" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" text-anchor="middle">Медиа временно недоступно</text>
+  <text x="600" y="475" fill="#9aa0a6" font-family="Arial, Helvetica, sans-serif" font-size="22" text-anchor="middle">Media temporarily unavailable</text>
+</svg>

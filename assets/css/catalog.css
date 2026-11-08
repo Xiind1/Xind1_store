@@ -1,0 +1,1116 @@
+/* ==========================================================================
+   Catalog styles: home hero and catalog counters, game grid, game page and
+   product cards. Loaded after base.css (tokens, .btn, .link, .search, .empty,
+   .contact-band, .reveal). Values reproduce the reference's final cascade.
+   Breakpoints (max-width): 1180 · 1024 · 900 · 800 · 760 · 560 · 420
+   (+ min-width 1000 for a single product card).
+   ========================================================================== */
+
+/* ---------- 1. Home hero ---------- */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  align-items: center;
+  gap: 44px;
+  padding: 34px 0 30px;
+}
+
+/* Outlined brand mark watermark (text comes from data-mark). */
+.hero::after {
+  content: attr(data-mark);
+  position: absolute;
+  top: -78px;
+  right: 28%;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.045);
+  font-size: clamp(150px, 23vw, 330px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.1em;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.hero > div {
+  animation: rise 0.75s 0.05s both var(--ease-out);
+}
+
+.hero-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.short-line {
+  width: 32px;
+  height: 1px;
+  background: var(--fg);
+  transform-origin: left;
+  animation: lineIn 0.7s 0.25s both var(--ease-out);
+}
+
+.hero h1 {
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  font-size: clamp(42px, 4.25vw, 62px);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  color: transparent;
+  background: linear-gradient(120deg, var(--fg) 15%, var(--muted) 72%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Second title line: italic serif accent. */
+.hero h1 span {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  color: transparent;
+  background: linear-gradient(100deg, var(--fg), var(--muted));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-copy {
+  max-width: 520px;
+  margin: 16px 0 20px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ---------- 2. Catalog counters (hero aside) ---------- */
+
+.catalog-stats {
+  align-self: end;
+  width: min(100%, 350px);
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+}
+
+.stats-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 170px;
+  padding: 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.stats-head .eyebrow {
+  letter-spacing: 0.16em;
+}
+
+.stats-live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stats-live i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #71d89b;
+  box-shadow: 0 0 12px #71d89b;
+}
+
+.stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 170px;
+  padding: 28px;
+  background: var(--panel);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 112px;
+  padding: 13px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  text-align: center;
+}
+
+.stat-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--raised);
+  color: var(--muted);
+}
+
+.stat-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stat-item p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-item strong {
+  display: block;
+  font-size: 31px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.stat-item p span {
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- 3. Game grid (#catalog) ---------- */
+
+.catalog-section {
+  padding: 24px 0 34px;
+  border-top: 1px solid var(--line);
+}
+
+.catalog-head-compact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: end;
+  gap: 28px;
+  margin-bottom: 18px;
+}
+
+.catalog-head-copy h2 {
+  margin-top: 6px;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.catalog-head-copy p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Fixed width: unlike other searches it does not grow on focus. */
+.catalog-search,
+.catalog-search:focus-within {
+  width: 300px;
+}
+
+.catalog-search {
+  min-height: 40px;
+}
+
+.game-catalog {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.game-card {
+  min-height: 330px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+  transition:
+    transform 0.25s,
+    border-color 0.25s;
+}
+
+.game-card:hover {
+  border-color: var(--strong);
+  transform: translateY(-5px);
+}
+
+.game-card-art {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a2027, #111);
+}
+
+.game-card-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.75);
+}
+
+.game-art-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 7, 9, 0.18), rgba(6, 7, 9, 0.7));
+}
+
+.game-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 104px;
+  padding: 16px 18px;
+}
+
+.game-card-body h3 {
+  font-size: 22px;
+  line-height: 1.05;
+}
+
+.game-card-body > span {
+  color: var(--muted);
+}
+
+.game-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.game-tag {
+  display: inline-flex;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Home contact band wrapper. */
+.help.help-single {
+  padding: 52px 0 56px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- 4. Game page ---------- */
+
+/* Wider than .wrap: min(1360px, 100vw - 48px), centred on the page. */
+.game-page {
+  width: min(1360px, calc(100vw - 48px));
+  margin-left: calc(50% - min(680px, 50vw - 24px));
+  padding: 14px 0 64px;
+}
+
+.game-back {
+  display: inline-flex;
+  margin-bottom: 9px;
+  font-size: 13px;
+}
+
+/* Desktop header grid: title + tags | description (+ eyebrow below) | search. */
+.game-page-head {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) minmax(420px, 1.35fr) 270px;
+  align-items: center;
+  gap: 24px;
+  margin: 0 0 18px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.game-page-copy {
+  display: contents;
+  min-width: 0;
+}
+
+.game-page-head .eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12px;
+}
+
+.game-page-title-row {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.game-page-head h1 {
+  font-size: clamp(42px, 4.2vw, 58px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+.game-page-count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 29px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--muted);
+  font: 600 11px/1 var(--font-mono);
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.game-page-description {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  width: min(760px, 100%);
+  margin: 14px auto 0;
+  padding: 16px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.62;
+  text-align: center;
+}
+
+.game-page-head .game-card-meta {
+  grid-column: 1;
+  grid-row: 2;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.game-page-head .game-tag {
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+/* Grows to 290px on focus through the shared .search rule. */
+.game-page-search {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  align-self: end;
+  width: 100%;
+  min-height: 42px;
+}
+
+/* ---------- 5. Product cards ---------- */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.game-page .product-grid {
+  gap: 18px;
+}
+
+/* No hover lift and no border/shadow easing: revealed cards keep the reveal
+   transition and transform (base.css), exactly as in the reference. */
+.product-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.025), transparent 55%),
+    var(--panel);
+}
+
+.product-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.055), transparent 35%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.product-card:hover {
+  border-color: #737373;
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.32);
+}
+
+.product-card:hover::after {
+  opacity: 1;
+}
+
+.product-card.reveal:nth-child(2) {
+  transition-delay: 0.07s;
+}
+
+.product-card.reveal:nth-child(3) {
+  transition-delay: 0.14s;
+}
+
+.product-cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 184px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: #191919;
+}
+
+.game-page .product-cover {
+  height: 190px;
+}
+
+.product-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.55s var(--ease-out),
+    filter 0.55s;
+}
+
+.product-card:hover .product-cover img {
+  transform: scale(1.035);
+  filter: contrast(1.04);
+}
+
+/* card.mode "logo": the whole logo, padded on the cover background. */
+.product-cover img.product-brand-logo {
+  padding: 18px;
+  background: transparent;
+  object-fit: contain;
+}
+
+/* Placeholder without an image: framed cross + split brand mark. */
+.cover-grid {
+  position: absolute;
+  inset: 16px;
+  border: 1px solid #3f3f3f;
+  border-radius: 2px;
+}
+
+.cover-grid::before,
+.cover-grid::after {
+  content: "";
+  position: absolute;
+  background: #3f3f3f;
+}
+
+.cover-grid::before {
+  left: 50%;
+  width: 1px;
+  height: 100%;
+}
+
+.cover-grid::after {
+  top: 50%;
+  width: 100%;
+  height: 1px;
+}
+
+.cover-type {
+  position: relative;
+  padding: 4px 14px;
+  background: #191919;
+  color: #bcbcb6;
+  font-size: 72px;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -7px;
+}
+
+/* "Soon" state: dimmed cover with a centred status plate. */
+.product-card.is-soon .product-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(8, 10, 12, 0.24);
+  pointer-events: none;
+}
+
+.product-card.is-soon .product-cover img {
+  filter: grayscale(1) saturate(0) brightness(0.58) contrast(0.92);
+}
+
+.product-cover-status {
+  position: absolute;
+  inset: 50% 16px auto;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 11px 16px;
+  border: 1px solid rgba(143, 214, 255, 0.52);
+  border-radius: 11px;
+  background: rgba(7, 18, 24, 0.9);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  color: #eaf8ff;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.product-cover-status strong {
+  font: 800 13px/1 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+
+.product-cover-status span {
+  color: #b9d9e8;
+  font-size: 12px;
+}
+
+.product-content {
+  padding: 18px;
+}
+
+.product-content h3 {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 2vw, 32px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.product-content p {
+  min-height: 44px;
+  margin: 8px 0 22px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.card-footer span {
+  color: var(--muted);
+}
+
+.product-card.is-soon .card-footer > span:first-child {
+  color: var(--accent);
+}
+
+.catalog-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.game-page .contact-band {
+  margin-top: 38px;
+}
+
+/* ---------- 6. Focus and motion ---------- */
+
+/* Cards clip their link's outline, so keyboard focus is drawn around the whole card. */
+@supports selector(:has(a)) {
+  .game-card > a:focus-visible,
+  .product-card > a:focus-visible {
+    outline: none;
+  }
+
+  .game-card:has(> a:focus-visible),
+  .product-card:has(> a:focus-visible) {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  [data-theme="light"] .game-card:has(> a:focus-visible),
+  [data-theme="light"] .product-card:has(> a:focus-visible) {
+    outline-color: var(--accent);
+  }
+}
+
+@keyframes lineIn {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ---------- 7. Light theme ---------- */
+
+[data-theme="light"] .catalog-stats,
+[data-theme="light"] .product-card {
+  border-color: #d9e0e6;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 1px 2px rgba(27, 39, 51, 0.035),
+    0 14px 36px rgba(38, 53, 68, 0.055);
+}
+
+[data-theme="light"] .product-card:hover {
+  border-color: #b9c6d0;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(38, 53, 68, 0.09);
+}
+
+[data-theme="light"] .product-cover,
+[data-theme="light"] .cover-type {
+  background: #e9eef2;
+}
+
+[data-theme="light"] .cover-grid {
+  border-color: #c9d2da;
+}
+
+[data-theme="light"] .cover-grid::before,
+[data-theme="light"] .cover-grid::after {
+  background: #c9d2da;
+}
+
+[data-theme="light"] .product-content p {
+  color: #5b5751;
+}
+
+/* ---------- 8. Responsive ---------- */
+
+@media (min-width: 1000px) {
+  /* A lone card keeps the three-column width instead of stretching. */
+  .product-grid:has(> .product-card:only-child) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1180px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 32px;
+  }
+
+  .game-catalog {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 30px 0 26px;
+  }
+
+  .catalog-stats {
+    width: 100%;
+  }
+
+  .catalog-head-compact {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .game-catalog {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .game-page {
+    width: auto;
+    margin-left: 0;
+    padding-top: 22px;
+  }
+
+  .game-page-head {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
+
+  /* Reference parity: between 761px and 900px the header copy is one flex row. */
+  .game-page-copy {
+    display: flex;
+  }
+
+  .game-page-title-row,
+  .game-page-description,
+  .game-page-head .game-card-meta,
+  .game-page-search {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .game-page-description {
+    width: min(100%, 760px);
+    padding: 16px 18px;
+  }
+
+  .game-page-head .game-card-meta {
+    margin-top: 10px;
+  }
+
+  .game-page-search {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 800px) {
+  .catalog-stats {
+    margin-top: 28px;
+  }
+
+  .stats-head,
+  .stats-grid {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Hero */
+  .hero {
+    gap: 20px;
+    padding: 22px 0 18px;
+  }
+
+  .hero::after {
+    display: none;
+  }
+
+  .hero-label {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .hero-label .eyebrow {
+    letter-spacing: 0.04em;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 11.6vw, 48px);
+    letter-spacing: -0.05em;
+    overflow-wrap: normal;
+  }
+
+  .hero-copy {
+    max-width: none;
+    margin: 13px 0 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 15px;
+  }
+
+  /* Counters */
+  .catalog-stats {
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .stats-grid {
+    gap: 6px;
+  }
+
+  .stat-item {
+    min-height: 88px;
+    padding: 10px;
+  }
+
+  .stat-item strong {
+    font-size: 26px;
+  }
+
+  .stat-item p span {
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+
+  /* Game grid */
+  .catalog-section {
+    padding: 18px 0 30px;
+  }
+
+  .catalog-head-compact {
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .catalog-head-copy h2 {
+    font-size: 25px;
+    line-height: 1.05;
+  }
+
+  .catalog-head-copy p {
+    font-size: 12px;
+  }
+
+  .catalog-search,
+  .catalog-search:focus-within {
+    width: 100%;
+  }
+
+  .catalog-search {
+    min-height: 44px;
+  }
+
+  .game-catalog {
+    gap: 12px;
+  }
+
+  .game-card {
+    min-height: 0;
+    border-radius: 14px;
+  }
+
+  .game-card:hover {
+    transform: none;
+  }
+
+  .game-card-art {
+    height: clamp(170px, 53vw, 220px);
+  }
+
+  .game-card-body {
+    gap: 7px;
+    min-height: 0;
+    padding: 14px 15px 15px;
+  }
+
+  .game-card-body h3 {
+    font-size: 20px;
+    line-height: 1.08;
+    overflow-wrap: break-word;
+  }
+
+  .game-card-body > span {
+    font-size: 12px;
+  }
+
+  .game-card-meta {
+    gap: 5px;
+  }
+
+  .game-tag {
+    padding: 3px 7px;
+    font-size: 9px;
+  }
+
+  .help.help-single {
+    padding: 36px 0;
+  }
+
+  /* Game page: one vertical reading flow */
+  .game-page {
+    padding: 16px 0 36px;
+  }
+
+  .game-back {
+    min-height: 40px;
+    margin-bottom: 10px;
+  }
+
+  .game-page-head {
+    display: block;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+  }
+
+  .game-page-copy {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .game-page-head .eyebrow {
+    margin: 0 0 8px;
+  }
+
+  .game-page-title-row {
+    order: 1;
+    align-items: flex-start;
+    gap: 9px 10px;
+  }
+
+  .game-page-head h1 {
+    flex: 0 1 auto;
+    max-width: 100%;
+    font-size: clamp(32px, 10.5vw, 42px);
+    line-height: 0.98;
+  }
+
+  .game-page-count {
+    flex: 0 0 auto;
+    min-height: 26px;
+    margin-top: 3px;
+    padding: 4px 8px;
+    font-size: 9px;
+  }
+
+  .game-page-description {
+    order: 2;
+    width: 100%;
+    margin: 14px 0 0;
+    padding: 14px 15px;
+    border-radius: 14px;
+    box-shadow: none;
+    font-size: 13px;
+    line-height: 1.55;
+    text-align: left;
+    overflow-wrap: break-word;
+  }
+
+  .game-page-head .game-card-meta {
+    order: 3;
+    margin: 11px 0 0;
+  }
+
+  .game-page-head .game-tag {
+    flex: 0 0 auto;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .game-page-search {
+    max-width: none;
+    min-height: 44px;
+    margin-top: 14px;
+  }
+
+  /* Cards */
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-page .product-grid {
+    gap: 12px;
+  }
+
+  .product-card {
+    border-radius: 14px;
+  }
+
+  .game-page .product-cover {
+    height: 165px;
+  }
+
+  .product-content {
+    padding: 15px;
+  }
+
+  .product-content h3 {
+    margin-bottom: 7px;
+    font-size: 24px;
+    overflow-wrap: break-word;
+  }
+
+  .product-content p {
+    font-size: 13px;
+  }
+
+  .card-footer {
+    gap: 8px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 560px) {
+  .game-catalog {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero h1 {
+    font-size: clamp(34px, 12.5vw, 43px);
+  }
+
+  .stat-item {
+    min-height: 80px;
+  }
+
+  .game-page-head h1 {
+    font-size: clamp(30px, 10vw, 38px);
+  }
+
+  .game-page-title-row {
+    gap: 8px;
+  }
+
+  .game-page-description {
+    padding: 13px;
+  }
+}
+
+/* Owner-entered text: a very long word or link without spaces wraps instead of widening the page
+   (normal words are unaffected: they already fit, and min-width:0 only matters for overlong ones). */
+.game-page-title-row,
+.game-page-description,
+.game-card-meta,
+.game-card-body,
+.product-content {
+  min-width: 0;
+}
+.game-page-head h1,
+.game-page-description,
+.game-tag,
+.game-card-body h3,
+.product-content h3,
+.product-content p {
+  overflow-wrap: break-word;
+}
+.game-tag {
+  max-width: 100%;
+}

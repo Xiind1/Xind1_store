@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<meta name="description" content="MyStore — информационный каталог перед покупкой: требования, возможности, скриншоты и видео. Заказы оформляются на FunPay." />
+<title>MyStore — детали перед покупкой</title>
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg?v=3f3197d766" />
+<link rel="stylesheet" href="assets/css/base.css?v=1" />
+<link rel="stylesheet" href="assets/css/catalog.css?v=1" />
+<link rel="stylesheet" href="assets/css/product.css?v=1" />
+<link rel="stylesheet" href="assets/css/help.css?v=1" />
+<script>try{var t=localStorage.getItem("store.theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body>
+<div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+<button type="button" class="scroll-top" id="scroll-top" aria-label="Наверх" title="Наверх" data-ui-label="a11y.toTop" data-ui-title="a11y.toTop">↑</button>
+<a class="skip" href="#main" data-ui="a11y.skip">К содержимому</a>
+
+<header class="topbar">
+  <nav class="nav wrap" aria-label="Основная навигация" data-ui-label="a11y.mainNav">
+    <a href="#" class="logo" data-ui-label="a11y.home"><span class="logo-mark" aria-hidden="true" data-brand-mark></span><span data-brand-name></span></a>
+    <div class="navlinks">
+      <a href="#catalog" data-nav="catalog" data-ui="nav.catalog">Каталог</a><a href="#help" class="helpnav" data-nav="help" data-requires="help" data-ui="nav.help">Справочник</a><a href="#guide" class="checknav" data-nav="guide" data-requires="guide" data-ui="nav.guide">Проверка ПК</a>
+    </div>
+    <div class="header-controls">
+      <div class="lang-switch" role="group" aria-label="Язык" data-ui-label="a11y.language" data-requires="english">
+        <button type="button" data-lang="ru" class="active">RU</button><button type="button" data-lang="en">EN</button>
+      </div>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Сменить тему" data-ui-label="a11y.theme">
+        <span class="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M19 5l-1.5 1.5m-11 11L5 19" /></svg></span><span class="moon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8 8 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z" /></svg></span>
+      </button>
+    </div>
+    <a class="btn profile-btn" data-profile href="#" target="_blank" rel="noopener noreferrer"><span data-ui="nav.profile">FunPay</span> <span class="arrow" aria-hidden="true">↗</span></a>
+    <button type="button" class="iconbtn menu-toggle" id="menu-toggle" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 8h16M4 16h16" /></svg>
+    </button>
+  </nav>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu" aria-label="Мобильная навигация" data-ui-label="a11y.mobileNav" hidden>
+  <a href="#catalog" data-nav="catalog" data-ui="nav.catalog">Каталог</a><a href="#help" data-nav="help" data-requires="help" data-ui="nav.help">Справочник</a><a href="#guide" data-nav="guide" data-requires="guide" data-ui="nav.guide">Проверка ПК</a><a href="#agreement" data-nav="agreement" data-requires="agreement" data-ui="nav.agreement">Пользовательское соглашение</a>
+</nav>
+
+<main id="main" class="wrap" tabindex="-1">
+  <noscript><section class="section empty"><h3>Для работы каталога включите JavaScript.</h3><p>Please enable JavaScript to view the catalog.</p></section></noscript>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-row">
+      <a href="#" class="logo"><span data-brand-name></span><small data-brand-tagline hidden></small></a>
+      <div class="footer-meta">
+        <a href="#agreement" class="link" data-requires="agreement" data-ui="footer.agreement">Пользовательское соглашение</a><a class="link" data-profile href="#" target="_blank" rel="noopener noreferrer" data-ui="footer.profile">Профиль ↗</a>
+      </div>
+    </div>
+    <p class="footer-note" data-ui="footer.note"></p>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Просмотр изображения" data-ui-label="a11y.lightbox">
+  <button type="button" class="iconbtn" id="close-lightbox" aria-label="Закрыть изображение" data-ui-label="a11y.lightboxClose">×</button><img id="lightbox-image" alt="" />
+</dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="data/catalog.js?v=20261108T181915Z"></script>
+<script src="assets/js/i18n/core.js?v=1"></script>
+<script src="assets/js/i18n/catalog.js?v=1"></script>
+<script src="assets/js/i18n/product.js?v=1"></script>
+<script src="assets/js/i18n/help.js?v=1"></script>
+<script src="assets/js/core.js?v=1"></script>
+<script src="assets/js/pages/catalog.js?v=1"></script>
+<script src="assets/js/pages/product.js?v=1"></script>
+<script src="assets/js/pages/help.js?v=1"></script>
+<script src="assets/js/app.js?v=1"></script>
+</body>
+</html>

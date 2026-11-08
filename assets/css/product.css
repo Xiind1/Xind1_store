@@ -1,0 +1,1251 @@
+/* ==========================================================================
+   Product page
+   Heading, sticky quick-navigation dock, media / features / requirements
+   sections, purchase panel and status badge. Feature groups reuse the help
+   centre accordion (details.help-card, help.css); only their modifiers live
+   here. Breakpoints (max-width): 1024 · 760 · 420. Reduced motion is handled
+   globally in base.css.
+   ========================================================================== */
+
+/* ---------- 1. Page heading ---------- */
+
+.detail-page {
+  padding: 32px 0 0;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.breadcrumb .link {
+  font-size: 14px;
+}
+
+.breadcrumb-game {
+  transition: color 0.22s;
+}
+
+.breadcrumb-game:hover {
+  color: var(--fg);
+}
+
+.detail-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 34px 0 28px;
+}
+
+.detail-heading h1 {
+  margin-top: 14px;
+  font-size: 48px;
+  letter-spacing: -2px;
+  overflow-wrap: anywhere;
+}
+
+.detail-heading p {
+  max-width: 660px;
+  margin-top: 18px;
+  color: var(--muted);
+  white-space: pre-wrap;
+}
+
+.detail-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* "Soon..." pill (heading kicker and purchase panel). */
+.product-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 28px;
+  padding: 5px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--muted);
+  font: 650 12px/1.1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.product-status-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.product-status-badge.is-soon {
+  border-color: rgba(143, 214, 255, 0.32);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ---------- 2. Layout: content column + purchase panel ---------- */
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 480px;
+  align-items: start;
+  gap: 32px;
+}
+
+.detail-content {
+  min-width: 0;
+}
+
+.detail-content h2 {
+  margin-bottom: 18px;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+}
+
+.detail-content .caption {
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.product-stack {
+  display: grid;
+  gap: 28px;
+}
+
+/* ---------- 3. Quick-navigation dock ---------- */
+
+/* product.js moves the ::before highlight through the --anchor-indicator-* properties. */
+.product-anchor-nav {
+  --anchor-indicator-x: 6px;
+  --anchor-indicator-y: 6px;
+  --anchor-indicator-w: 0px;
+  --anchor-indicator-h: 44px;
+  position: sticky;
+  top: calc(var(--topbar-h) + 12px);
+  z-index: 8;
+  isolation: isolate;
+  align-self: start;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 7px;
+  width: 100%;
+  margin-bottom: 2px;
+  padding: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 17px;
+  background: rgba(13, 13, 13, 0.96);
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.24),
+    0 2px 10px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.product-anchor-nav::before {
+  content: "";
+  position: absolute;
+  top: var(--anchor-indicator-y);
+  left: var(--anchor-indicator-x);
+  z-index: 0;
+  width: var(--anchor-indicator-w);
+  height: var(--anchor-indicator-h);
+  border: 1px solid rgba(143, 214, 255, 0.66);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(143, 214, 255, 0.13), rgba(143, 214, 255, 0.045));
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    inset 0 0 24px rgba(143, 214, 255, 0.035);
+  opacity: var(--anchor-indicator-visible, 0);
+  pointer-events: none;
+  transform: translateZ(0);
+  transition:
+    left 0.46s cubic-bezier(0.2, 0.78, 0.2, 1),
+    top 0.46s cubic-bezier(0.2, 0.78, 0.2, 1),
+    width 0.46s cubic-bezier(0.2, 0.78, 0.2, 1),
+    height 0.46s cubic-bezier(0.2, 0.78, 0.2, 1),
+    opacity 0.18s ease;
+}
+
+/* Thin accent line under the dock. */
+.product-anchor-nav::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: -9px;
+  left: 16px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(143, 214, 255, 0.28), transparent);
+  opacity: 0.58;
+  pointer-events: none;
+}
+
+.product-anchor-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 46px;
+  padding: 10px 13px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 680;
+  letter-spacing: -0.01em;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease,
+    background 0.22s ease;
+}
+
+/* Accent dot (active link only) and the "↓" hint. */
+.product-anchor-link::before {
+  content: "";
+  flex: 0 0 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent-soft);
+  opacity: 0;
+  transform: scale(0.35);
+  transition:
+    opacity 0.2s ease,
+    transform 0.28s var(--ease-out),
+    box-shadow 0.28s ease;
+}
+
+.product-anchor-link::after {
+  content: "↓";
+  flex: 0 0 auto;
+  font-size: 15px;
+  opacity: 0.58;
+  transform: translateY(-1px);
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.78, 0.2, 1),
+    opacity 0.2s ease;
+}
+
+.product-anchor-link:hover {
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--fg);
+  transform: translateY(-1px);
+}
+
+.product-anchor-link.is-active {
+  color: var(--fg);
+  transform: translateY(-1px);
+}
+
+.product-anchor-link.is-active::before {
+  box-shadow: 0 0 0 5px var(--accent-soft);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.product-anchor-link:hover::after,
+.product-anchor-link.is-active::after {
+  opacity: 1;
+  transform: translateY(2px);
+}
+
+/* ---------- 4. Sections ---------- */
+
+.product-section {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(17, 17, 17, 0.62);
+  scroll-margin-top: 190px;
+  transition:
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    transform 0.28s var(--ease-out),
+    background 0.28s ease;
+}
+
+.product-section .section-number {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--faint);
+  font: 13px/1 var(--font-mono);
+}
+
+.product-section h2 {
+  margin-bottom: 12px;
+}
+
+@media (hover: hover) {
+  .product-section:hover {
+    border-color: rgba(143, 214, 255, 0.24);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+}
+
+/* Arrival highlight after a dock jump (class toggled by product.js). */
+.product-section.anchor-arrival {
+  animation: product-anchor-arrival 0.92s cubic-bezier(0.2, 0.76, 0.2, 1);
+}
+
+.product-section.anchor-arrival::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 2;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 18%, rgba(143, 214, 255, 0.16) 48%, transparent 78%);
+  pointer-events: none;
+  transform: translateX(-110%);
+  animation: product-anchor-sheen 0.78s cubic-bezier(0.2, 0.76, 0.2, 1);
+}
+
+@keyframes product-anchor-arrival {
+  0% {
+    border-color: rgba(143, 214, 255, 0.78);
+    background-color: rgba(143, 214, 255, 0.055);
+    box-shadow:
+      0 0 0 1px rgba(143, 214, 255, 0.45),
+      0 14px 42px rgba(0, 0, 0, 0.16);
+  }
+  58% {
+    border-color: rgba(143, 214, 255, 0.42);
+    box-shadow:
+      0 0 0 1px rgba(143, 214, 255, 0.14),
+      0 10px 30px rgba(0, 0, 0, 0.12);
+  }
+  100% {
+    border-color: var(--line);
+    box-shadow: none;
+  }
+}
+
+@keyframes product-anchor-sheen {
+  to {
+    transform: translateX(110%);
+  }
+}
+
+/* ---------- 5. Media ---------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.media-box {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #141414;
+}
+
+.media-box button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+}
+
+/* The box clips overflow, so the keyboard focus ring is drawn inside. */
+.media-box button:focus-visible {
+  outline-offset: -3px;
+}
+
+.media-box img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.media-box video,
+.media-box iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.media-box p {
+  padding: 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* An image that failed to load shows the fallback; its caption says so (localised text). */
+.media-box.media-error p::before {
+  content: attr(data-error-note) " · ";
+  color: var(--muted);
+}
+
+@media (hover: hover) {
+  .media-box img {
+    transition:
+      transform 0.55s var(--ease-out),
+      filter 0.35s ease;
+  }
+
+  .media-box:hover img {
+    transform: scale(1.025);
+  }
+}
+
+.media-missing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 260px;
+  padding: 24px;
+  border: 1px dashed var(--strong);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.media-missing p {
+  max-width: 430px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.large-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--strong);
+  border-radius: 12px;
+}
+
+/* ---------- 6. Features ---------- */
+
+.feature-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  white-space: pre-wrap;
+}
+
+.feature-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  margin-top: -5px;
+  border: 1px solid #414141;
+  border-radius: 8px;
+  background: rgba(143, 214, 255, 0.055);
+  color: var(--accent);
+}
+
+.feature-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Feature groups: modifiers of the help-centre accordion (details.help-card). */
+.full-feature-group {
+  overflow-anchor: none;
+}
+
+/* The card clips overflow, so the keyboard focus ring is drawn inside. */
+.full-feature-group > summary:focus-visible {
+  outline-offset: -3px;
+}
+
+.full-feature-group.is-parent > .help-card-body {
+  display: grid;
+  gap: 10px;
+  padding-top: 16px;
+}
+
+.full-feature-group.is-nested {
+  border-radius: 12px;
+  background: var(--raised);
+}
+
+.full-feature-group.is-nested > summary {
+  grid-template-columns: minmax(0, 1fr) 32px;
+  gap: 14px;
+  padding: 15px 18px;
+}
+
+.full-feature-group.is-nested > summary h3 {
+  margin: 7px 0 4px;
+  font-size: 17px;
+}
+
+.full-feature-group.is-nested > summary .help-toggle {
+  width: 32px;
+  height: 32px;
+  font-size: 17px;
+}
+
+.full-feature-group.is-nested > .help-card-body {
+  padding: 0 18px 16px;
+}
+
+/* "Collapse ↑" button at the end of an open group. */
+.feature-collapse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.feature-collapse:hover {
+  border-color: var(--strong);
+  color: var(--fg);
+}
+
+.feature-collapse:focus-visible {
+  outline: 2px solid var(--strong);
+  outline-offset: 2px;
+}
+
+/* ---------- 7. Requirements ---------- */
+
+.req-list {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.req-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.req-row dt {
+  color: var(--muted);
+}
+
+.req-row dd {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.req-empty {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* "Not sure where to find your specs?" box linking to the PC check guide. */
+.detail-hint {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.detail-hint a {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 44px;
+  margin-top: 8px;
+  color: #eee;
+  font-size: 14px;
+}
+
+.detail-hint a span {
+  transition: transform 0.22s var(--ease-out);
+}
+
+.detail-hint a:hover span {
+  transform: translate(3px, -3px);
+}
+
+/* ---------- 8. Purchase panel ---------- */
+
+.purchase {
+  position: sticky;
+  top: calc(var(--topbar-h) + 27px);
+  margin-bottom: 20px;
+  padding: 22px;
+  border: 1px solid var(--strong);
+  border-radius: 12px;
+  background:
+    linear-gradient(150deg, rgba(131, 214, 255, 0.06), transparent 38%),
+    var(--panel);
+}
+
+.purchase > h2 {
+  margin: 0 0 20px;
+  font-size: 27px;
+  font-weight: 550;
+  line-height: 1.12;
+  letter-spacing: -0.5px;
+}
+
+.purchase hr {
+  margin: 24px 0 20px;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.purchase .btn {
+  width: 100%;
+  gap: 12px;
+}
+
+.purchase-note {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.agreement-buy {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Seller trust points (settings.trust). */
+.trust-list {
+  display: grid;
+  gap: 2px;
+  margin: 18px 0;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.trust-list > div {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.trust-list > div > span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.trust-list > div > span svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trust-list p {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trust-list b {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.trust-list small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* Period selector. */
+.periods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 10px;
+  margin: 6px 0 18px;
+}
+
+.period {
+  position: relative;
+  overflow: hidden;
+  min-height: 70px;
+  padding: 14px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 13px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.period::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 0%, var(--accent-soft), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+/* Check mark of the selected period. */
+.period::after {
+  content: "✓";
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #06131a;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0;
+  transform: scale(0.75);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.period b {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: var(--fg);
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+}
+
+.period:hover {
+  border-color: rgba(143, 214, 255, 0.48);
+  background: linear-gradient(145deg, rgba(143, 214, 255, 0.08), rgba(255, 255, 255, 0.02));
+  transform: translateY(-2px);
+}
+
+.period:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.period.active {
+  border-color: var(--accent);
+  background: linear-gradient(145deg, rgba(143, 214, 255, 0.18), rgba(139, 124, 255, 0.07));
+  box-shadow:
+    inset 0 0 0 1px rgba(143, 214, 255, 0.1),
+    0 10px 26px rgba(0, 0, 0, 0.18);
+  color: var(--fg);
+  transform: translateY(-1px);
+}
+
+.period.active::before,
+.period.active::after {
+  opacity: 1;
+}
+
+.period.active::after {
+  transform: scale(1);
+}
+
+/* Selected-period status line. */
+.purchase-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 14px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.purchase-status-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #777;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.035);
+}
+
+.purchase-status.is-ready {
+  border-color: rgba(143, 214, 255, 0.24);
+  background: var(--accent-soft);
+  color: var(--fg);
+}
+
+.purchase-status.is-ready .purchase-status-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* "Coming soon" box replacing the period selector. */
+.purchase-soon {
+  display: grid;
+  gap: 14px;
+  margin: 8px 0 2px;
+  padding: 18px;
+  border: 1px solid rgba(143, 214, 255, 0.25);
+  border-radius: 12px;
+  background: var(--accent-soft);
+}
+
+.purchase-soon strong {
+  font-size: 18px;
+}
+
+.purchase-soon p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ---------- 9. Light theme ---------- */
+
+[data-theme="light"] .detail-heading p,
+[data-theme="light"] .detail-content .caption,
+[data-theme="light"] .req-row dt,
+[data-theme="light"] .feature-list li,
+[data-theme="light"] .media-box p {
+  color: #5f6974;
+}
+
+[data-theme="light"] .product-status-badge {
+  border-color: #cbd5dd;
+  background: #f4f7f9;
+  color: #596673;
+}
+
+[data-theme="light"] .product-status-badge.is-soon {
+  border-color: #b7d9e8;
+  background: #eaf6fb;
+  color: #11658e;
+}
+
+[data-theme="light"] .product-anchor-nav {
+  border-color: rgba(158, 174, 187, 0.42);
+  background: rgba(255, 255, 255, 0.91);
+  box-shadow:
+    0 14px 34px rgba(38, 53, 68, 0.1),
+    0 2px 8px rgba(38, 53, 68, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="light"] .product-anchor-nav::before {
+  border-color: rgba(21, 121, 169, 0.38);
+  background: linear-gradient(135deg, rgba(21, 121, 169, 0.11), rgba(21, 121, 169, 0.045));
+  box-shadow:
+    0 8px 20px rgba(38, 53, 68, 0.07),
+    inset 0 0 22px rgba(21, 121, 169, 0.035);
+}
+
+[data-theme="light"] .product-anchor-nav::after {
+  background: linear-gradient(90deg, transparent, rgba(21, 121, 169, 0.22), transparent);
+}
+
+[data-theme="light"] .product-anchor-link:hover {
+  background: rgba(21, 121, 169, 0.055);
+}
+
+/* Placed after the :hover rule on purpose: in the light theme hover only lifts the card. */
+[data-theme="light"] .product-section,
+[data-theme="light"] .purchase,
+[data-theme="light"] .detail-hint {
+  border-color: #d9e0e6;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 1px 2px rgba(27, 39, 51, 0.035),
+    0 14px 36px rgba(38, 53, 68, 0.055);
+}
+
+[data-theme="light"] .product-section.anchor-arrival::after {
+  background: linear-gradient(105deg, transparent 18%, rgba(21, 121, 169, 0.12) 48%, transparent 78%);
+}
+
+[data-theme="light"] .media-box {
+  border-color: #d9e0e6;
+  background: #f7f9fb;
+  box-shadow: 0 7px 18px rgba(38, 53, 68, 0.045);
+}
+
+[data-theme="light"] .media-missing,
+[data-theme="light"] .large-icon {
+  border-color: #b9c6d0;
+}
+
+[data-theme="light"] .feature-list li,
+[data-theme="light"] .req-row {
+  border-color: #d8d5cf;
+}
+
+[data-theme="light"] .feature-icon {
+  border-color: #c7d7e0;
+  background: #eef8fc;
+}
+
+[data-theme="light"] .detail-hint {
+  background: linear-gradient(145deg, rgba(236, 247, 252, 0.95), rgba(255, 255, 255, 0.94));
+}
+
+[data-theme="light"] .detail-hint a {
+  color: #155f85;
+}
+
+[data-theme="light"] .purchase {
+  background:
+    linear-gradient(155deg, rgba(37, 145, 194, 0.075), transparent 34%),
+    rgba(255, 255, 255, 0.94);
+}
+
+[data-theme="light"] .purchase-note {
+  color: #5b5751;
+}
+
+[data-theme="light"] .trust-list {
+  border-color: #dfe5ea;
+}
+
+[data-theme="light"] .period {
+  border-color: #ccd6de;
+  background: linear-gradient(145deg, #fff, #f5f8fa);
+  box-shadow: 0 4px 12px rgba(38, 53, 68, 0.035);
+}
+
+[data-theme="light"] .period:hover {
+  border-color: #92c4da;
+  background: #f0f8fb;
+}
+
+[data-theme="light"] .period.active {
+  border-color: #66acd0;
+  background: linear-gradient(145deg, #e6f4fa, #f3f8fc);
+  box-shadow:
+    inset 0 0 0 1px rgba(21, 121, 169, 0.06),
+    0 8px 18px rgba(38, 53, 68, 0.07);
+  color: var(--fg);
+}
+
+[data-theme="light"] .purchase-status {
+  border-color: #dbe2e8;
+  background: #f7f9fa;
+}
+
+[data-theme="light"] .purchase-status.is-ready {
+  border-color: #c4e2ee;
+  background: #edf8fc;
+}
+
+[data-theme="light"] .purchase-soon {
+  border-color: #c4e2ee;
+  background: #edf8fc;
+}
+
+/* ---------- 10. Responsive ---------- */
+
+@media (max-width: 1024px) {
+  .detail-layout {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 24px;
+  }
+
+  .purchase {
+    padding: 20px;
+  }
+
+  /* The content column is too narrow for three nowrap links: the dock scrolls sideways
+     and product.js keeps the active link centred. */
+  .product-anchor-nav {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 6px;
+    scrollbar-width: none;
+  }
+
+  .product-anchor-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-anchor-link {
+    flex: 1 0 auto;
+  }
+
+  /* A scrolling dock clips overflow: keep the focus ring inside the link. */
+  .product-anchor-link:focus-visible {
+    outline-offset: -3px;
+  }
+}
+
+@media (max-width: 760px) {
+  .detail-page {
+    padding-top: 14px;
+  }
+
+  .detail-heading {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 18px 0 14px;
+  }
+
+  .detail-heading h1 {
+    font-size: clamp(32px, 10.5vw, 42px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .detail-heading p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* One column; the purchase panel moves above the dock. */
+  .detail-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .detail-content {
+    width: 100%;
+  }
+
+  .detail-content h2 {
+    font-size: 23px;
+    line-height: 1.08;
+  }
+
+  .detail-content .caption {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .product-stack {
+    gap: 12px;
+  }
+
+  .product-anchor-nav {
+    top: calc(var(--topbar-h) + 6px);
+    margin-inline: 0;
+    padding: 5px;
+    border-radius: 12px;
+  }
+
+  .product-anchor-link {
+    flex: 0 0 auto;
+    min-width: 136px;
+    min-height: 40px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .product-section {
+    min-width: 0;
+    max-width: 100%;
+    padding: 16px;
+    border-radius: 13px;
+    scroll-margin-top: 130px;
+  }
+
+  .product-section .section-number {
+    margin-bottom: 9px;
+    font-size: 11px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .media-box {
+    border-radius: 12px;
+  }
+
+  .media-box img {
+    height: auto;
+    min-height: 180px;
+    max-height: 62dvh;
+    object-fit: contain;
+    background: #0b0b0b;
+  }
+
+  .media-box video,
+  .media-box iframe {
+    height: auto;
+    min-height: 210px;
+  }
+
+  .media-box p {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+
+  .feature-list {
+    gap: 0;
+  }
+
+  .feature-list li {
+    gap: 10px;
+    padding: 12px 0;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .feature-icon {
+    flex-basis: 30px;
+    width: 30px;
+    height: 30px;
+    margin-top: -2px;
+  }
+
+  .req-row {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 11px 0;
+  }
+
+  .purchase {
+    position: static;
+    order: -1;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .purchase > h2 {
+    margin-bottom: 13px;
+    font-size: 21px;
+  }
+
+  .purchase hr {
+    margin: 20px 0 14px;
+  }
+
+  .purchase .btn {
+    min-height: 46px;
+  }
+
+  .purchase-note {
+    margin-top: 12px;
+  }
+
+  .purchase-status {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  .trust-list {
+    margin: 15px 0;
+  }
+
+  .periods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .period {
+    min-height: 56px;
+    padding: 11px 10px;
+    border-radius: 11px;
+  }
+
+  .period b {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .detail-heading h1 {
+    font-size: 32px;
+  }
+
+  .product-anchor-link {
+    min-width: 122px;
+    font-size: 11px;
+  }
+}
